@@ -31,7 +31,7 @@ func (t *Transcript) ChallengeBytes(label, out []byte) error {
 	return nil
 }
 
-func New(label []byte) *Transcript {
+func NewTranscript(label []byte) *Transcript {
 	strobe, _ := strobe.New(ProtocolLabel, strobe.Bit128)
 	transcript := &Transcript{strobe}
 
