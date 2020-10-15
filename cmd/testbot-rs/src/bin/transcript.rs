@@ -86,7 +86,10 @@ fn main() {
 
         t.challenge_bytes(CHALLENGE_LABEL.as_bytes(), challenge.0.as_mut_slice());
 
-        let c = MessageChallengePair { message: Bytes(vec![]), challenge };
+        let c = MessageChallengePair {
+            message: Bytes(vec![]),
+            challenge,
+        };
 
         message_challenge_pairs.push(c);
     }

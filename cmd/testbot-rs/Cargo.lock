@@ -184,7 +184,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "testbot-rs"
+name = "testbot"
 version = "0.1.0"
 dependencies = [
  "base64",

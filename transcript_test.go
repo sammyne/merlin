@@ -10,7 +10,10 @@ import (
 )
 
 func TestTranscript_ChallengeBytes(t *testing.T) {
-	testVector := mustReadTestVector(t)
+	testVector := mustReadTestVector4Transcript(t)
+
+	//out, _ := json.MarshalIndent(testVector, "", "  ")
+	//fmt.Printf("%s\n", out)
 
 	for i, v := range testVector.MessageChallengePairs {
 		label := append([]byte{}, testVector.Label...)
@@ -44,11 +47,7 @@ type TestVector struct {
 	MessageChallengePairs []MessageChallengePair `json:"message_challenge_pairs"`
 }
 
-func makeCopy(data []byte) []byte {
-	return append([]byte{}, data...)
-}
-
-func mustReadTestVector(t *testing.T) TestVector {
+func mustReadTestVector4Transcript(t *testing.T) TestVector {
 	const src = "testdata/transcripts.json"
 
 	data, err := ioutil.ReadFile(src)

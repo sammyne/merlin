@@ -20,7 +20,7 @@ func (r *Rand) Read(buf []byte) (n int, err error) {
 	var bLen [4]byte
 	byteOrder.PutUint32(bLen[:], uint32(len(buf)))
 
-	_ = r.strobe.AD(bLen[:], &strobe.Options{})
+	_ = r.strobe.AD(bLen[:], &strobe.Options{Meta: true})
 
 	out, err := r.strobe.PRF(len(buf))
 	if err != nil {
@@ -39,7 +39,7 @@ func (r *Rand) rekey(label, witness []byte) {
 
 	_ = r.strobe.AD(label, &strobe.Options{Meta: true})
 	_ = r.strobe.AD(wLen[:], &strobe.Options{Meta: true, Streaming: true})
-	_ = r.strobe.AD(witness, &strobe.Options{})
+	_ = r.strobe.KEY(witness, false)
 }
 
 func (r *Rand) finalize(rng io.Reader) error {
