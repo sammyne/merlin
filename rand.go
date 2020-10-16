@@ -22,12 +22,9 @@ func (r *Rand) Read(buf []byte) (n int, err error) {
 
 	_ = r.strobe.AD(bLen[:], &strobe.Options{Meta: true})
 
-	out, err := r.strobe.PRF(len(buf))
-	if err != nil {
+	if err := r.strobe.PRF(buf, false); err != nil {
 		return 0, err
 	}
-
-	copy(buf, out)
 
 	return len(buf), nil
 }

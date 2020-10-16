@@ -22,11 +22,9 @@ func (t *Transcript) ChallengeBytes(label, out []byte) error {
 
 	_ = t.strobe.AD(label, &strobe.Options{Meta: true})
 	_ = t.strobe.AD(outLen[:], &strobe.Options{Meta: true, Streaming: true})
-	c, err := t.strobe.PRF(len(out))
-	if err != nil {
+	if err := t.strobe.PRF(out, false); err != nil {
 		return err
 	}
-	copy(out, c)
 
 	return nil
 }
