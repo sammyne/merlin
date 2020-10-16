@@ -1,6 +1,10 @@
 # merlin
 Implementation of [Merlin Transcripts] in Go.
 
+## Examples
+- [Rand](./rand_example_test.go)
+- [Transcript.ChallengeBytes](./transcript_example_test.go)
+
 ## References
 - [Merlin Transcripts]
 - [dalek-cryptography/merlin]
