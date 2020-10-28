@@ -1,6 +1,10 @@
 package merlin
 
-import "github.com/sammyne/strobe"
+import (
+	"encoding/json"
+
+	"github.com/sammyne/strobe"
+)
 
 type Transcript struct {
 	strobe *strobe.Strobe
@@ -26,6 +30,23 @@ func (t *Transcript) ChallengeBytes(label, out []byte) error {
 		return err
 	}
 
+	return nil
+}
+
+// Clone makes a deep copy of t.
+func (t *Transcript) Clone() *Transcript {
+	return &Transcript{strobe: t.strobe.Clone()}
+}
+
+func (t Transcript) MarshalJSON() ([]byte, error) {
+	return json.Marshal(t.strobe)
+}
+
+func (t *Transcript) UnmarshalJSON(data []byte) error {
+	t.strobe = new(strobe.Strobe)
+	if err := json.Unmarshal(data, t.strobe); err != nil {
+		return err
+	}
 	return nil
 }
 

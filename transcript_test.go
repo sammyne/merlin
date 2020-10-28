@@ -35,6 +35,50 @@ func TestTranscript_ChallengeBytes(t *testing.T) {
 	}
 }
 
+func TestTranscript_Clone(t *testing.T) {
+	t1 := merlin.NewTranscript([]byte("json"))
+	t1.AppendMessage([]byte("hello"), []byte("world"))
+
+	expect, err := json.Marshal(t1)
+	if err != nil {
+		t.Fatalf("fail marshal transcript: %v", err)
+	}
+
+	t2 := t1.Clone()
+	got, err := json.Marshal(t2)
+	if err != nil {
+		t.Fatalf("fail marshal the cloned transcript: %v", err)
+	}
+
+	if !bytes.Equal(expect, got) {
+		t.Fatalf("invalid clone: expect '%s', got '%s'", expect, got)
+	}
+}
+
+func TestTranscript_MarshalJSON(t *testing.T) {
+	t1 := merlin.NewTranscript([]byte("json"))
+	t1.AppendMessage([]byte("hello"), []byte("world"))
+
+	expect, err := json.Marshal(t1)
+	if err != nil {
+		t.Fatalf("fail marshal transcript: %v", err)
+	}
+
+	var t2 merlin.Transcript
+	if err := json.Unmarshal(expect, &t2); err != nil {
+		t.Fatalf("fail unmarshal transcript: %v", err)
+	}
+
+	got, err := json.Marshal(t2)
+	if err != nil {
+		t.Fatalf("fail marshal the recovered transcript: %v", err)
+	}
+
+	if !bytes.Equal(expect, got) {
+		t.Fatalf("invalid marshal/unmarshaling: expect '%s', got '%s'", expect, got)
+	}
+}
+
 type MessageChallengePair struct {
 	Message   []byte `json:"message"`
 	Challenge []byte `json:"challenge"`
